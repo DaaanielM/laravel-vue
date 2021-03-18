@@ -80,7 +80,7 @@ export default {
   created() {
     this.token = localStorage.getItem("blog_token");
     if (this.token) {
-      axios.defaults.headers.common["Authorization"] = "Bearer" + this.token;
+      axios.defaults.headers.common["Authorization"] = "Bearer " + this.token;
       this.$store.dispatch("user/getCurrent");
     } else {
       window.location.replace("login");
