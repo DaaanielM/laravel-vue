@@ -4,7 +4,7 @@
       <v-list dense>
         <v-list-item link color="#00B0FF" to="/example">
           <v-list-item-action>
-            <v-icon>mdi-home</v-icon>
+            <v-icon color="#00C853">mdi-home</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Menu</v-list-item-title>
@@ -39,7 +39,7 @@
         </v-list-group>
         <v-list-item link @click="logout">
           <v-list-item-action>
-            <v-icon>mdi-power</v-icon>
+            <v-icon color="#FF1744">mdi-power</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Cerrar Sesión</v-list-item-title>
@@ -91,10 +91,10 @@ export default {
 
 <style>
 .footer {
-  height: 90px;
+  height: 100px;
   display: flex;
   justify-content: center;
-  font-size: 14px;
+  font-size: 15px;
   width: 100%;
   margin: auto;
   font-weight: bold;
