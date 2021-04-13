@@ -80,7 +80,7 @@
     <v-dialog v-model="dialog" persistent max-width="800px">
       <v-card>
         <v-card-title class="headline cyan accent-4">
-          <span class="headline white--text">Editar Usuario</span>
+          <span class="headline white--text">Agregar Usuario</span>
         </v-card-title>
         <v-card-text>
           <v-container>
