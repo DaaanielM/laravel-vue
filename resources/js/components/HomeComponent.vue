@@ -2,7 +2,7 @@
   <v-app id="inspire">
     <v-navigation-drawer v-model="drawer" app>
       <v-list dense>
-        <v-list-item link color="#00B0FF" to="/example">
+        <v-list-item link color="#29B6F6" to="/example">
           <v-list-item-action>
             <v-icon color="#00C853">mdi-home</v-icon>
           </v-list-item-action>
@@ -13,14 +13,14 @@
         <v-list-group
           :prepend-icon="model ? 'mdi-chevron-up' : 'mdi-chevron-down'"
           append-icon=""
-          color="#00B0FF"
+          color="#651FFF"
         >
           <template v-slot:activator>
             <v-list-item-content>
               <v-list-item-title> Acceso </v-list-item-title>
             </v-list-item-content>
           </template>
-          <v-list-item link color="#651FFF" to="/user">
+          <v-list-item link color="#00E676" to="/user">
             <v-list-item-action>
               <v-icon>mdi-account</v-icon>
             </v-list-item-action>
@@ -47,7 +47,7 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar app color="#00C853" dark>
+    <v-app-bar app color="#00ACC1" dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-spacer />
     </v-app-bar>
@@ -56,7 +56,7 @@
         <router-view></router-view>
       </v-container>
     </v-main>
-    <v-footer class="footer" app color="#00C853" dark>
+    <v-footer class="footer" app color="#00ACC1" dark>
       <span class="white--text">DANIEL BRAND - &copy; 2021</span>
     </v-footer>
   </v-app>

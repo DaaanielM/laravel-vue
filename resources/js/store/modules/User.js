@@ -9,7 +9,7 @@ const actions = {
     getLogin({
         commit
     }, user) {
-        axion.post('http://localhost/fet/public/api/user/login', {
+        axios.post('http://localhost/fet/public/api/user/login', {
                 email: user.email,
                 password: user.password
             })
@@ -26,7 +26,7 @@ const actions = {
     },
     getLogout() {
         localStorage.removeItem('blog_token')
-        window.location.replace('home');
+        window.location.replace('login');
     },
     getList({
         commit
@@ -44,8 +44,18 @@ const actions = {
             .then(response => {
                 console.log(response)
             })
+    },
+    async saveUser({commit}, user){
+        const response = await axios.post('http://localhost/fet/public/api/user/users/store', {
+            name: user.name,
+            email: user.email,
+            password: user.password
+        })
+        console.log(response);
     }
 }
+
+
 
 const mutations = {
     SetMessage(state, data) {

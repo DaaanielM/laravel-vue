@@ -6,12 +6,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use Auth;
+use Hash;
 
 class UserController extends Controller
 {
     public function current()
     {
-        return Auth::user();
+        $user = Auth::user();
+        return [
+            'user' => $user
+        ];
     }
     public function index()
     {
@@ -19,5 +23,23 @@ class UserController extends Controller
         return [
             'users' => $users
         ];
+    }
+
+    public function store(Request $request)
+    {
+        $messages = [
+            'email.unique' => 'Este email ya se encuentra registrado, intente otro'
+        ];
+
+        $this->validate(request(), [
+            'email' => ['required', 'max:100', 'unique:users'],
+        ], $messages);
+
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return response()->json(['user' => $user]);
     }
 }

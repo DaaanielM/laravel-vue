@@ -6,10 +6,11 @@
         <v-row align="center" justify="center">
           <v-col cols="12" sm="8" md="4">
             <v-card class="elevation-12">
-              <v-toolbar class="bg-title" color="#00C853" dark flat>
+              <v-toolbar class="bg-title" color="#00ACC1" dark flat>
                 <v-toolbar-title class="title"
                   >Formulario de Acceso</v-toolbar-title
                 >
+
                 <v-spacer />
               </v-toolbar>
               <v-card-text>
@@ -21,7 +22,6 @@
                     type="text"
                     v-model="user.email"
                   />
-
                   <v-text-field
                     id="password"
                     label="Password"
@@ -30,13 +30,13 @@
                     type="password"
                     v-model="user.password"
                   />
+
                   <div class="text-error">{{ message }}</div>
                 </v-form>
               </v-card-text>
 
               <v-card-actions class="btn">
-                <v-spacer />
-                <v-btn class="textBtn" color="#00C853" @click="login"
+                <v-btn class="textBtn" color="#00ACC1" @click="login"
                   >Ingresar</v-btn
                 >
               </v-card-actions>
@@ -97,17 +97,21 @@ export default {
   display: block !important;
   margin: auto !important;
   text-align: center !important;
+  padding-bottom: 20px;
 }
 
 .textBtn {
-  padding: 20px !important;
+  padding: 10px !important;
   color: #fff !important;
-  width: 30% !important;
+  width: 40% !important;
   font-weight: bold;
+  margin-bottom: 20px;
+  margin: auto !important;
+  border-radius: 18px !important;
 }
 
 .textBtn:hover {
   background: #ffffff !important;
-  color: #00c853 !important;
+  color: #46a4c8 !important;
 }
 </style>

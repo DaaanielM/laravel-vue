@@ -4,6 +4,8 @@ window.Vue = require("vue");
 import Vuetify from "../plugins/vuetify";
 import store from "./store";
 import router from "./router";
+import axios from 'axios';
+axios.defaults.baseURl = "http://localhost/fet/public/api/"; 
 
 Vue.component(
     "example-component",
