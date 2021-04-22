@@ -33,12 +33,25 @@ class UserController extends Controller
 
         $this->validate(request(), [
             'email' => ['required', 'max:100', 'unique:users'],
+            'name' => ['required', 'max:100'],
+            'password' => ['required', 'max:100'],
         ], $messages);
 
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = Hash::make($request->password);
+        $user->password = \Hash::make($request->password);
+        $user->save();
+        return response()->json(['user' => $user]);
+    }
+    public function update(Request $request)
+    {
+        $user = User::findOrFail($request->id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if ($request->password) {
+            $user->password = \Hash::make($request->password);
+        }
         $user->save();
         return response()->json(['user' => $user]);
     }

@@ -3,12 +3,16 @@ import axion from 'axios'
 
 const state = {
     message: '',
-    listUsers: []
+    listUsers: [],
+    errorMessage: [],
 }
 const actions = {
     getLogin({
         commit
     }, user) {
+        commit('SetMessage', "")
+        commit('SET_ERRORS', [])
+
         axios.post('http://localhost/fet/public/api/user/login', {
                 email: user.email,
                 password: user.password
@@ -22,8 +26,14 @@ const actions = {
                 if (response.data.message) {
                     commit('SetMessage', response.data.message)
                 }
+            }).catch((err) => {
+                if(err.response.data.errors){
+                    // this.errorMessage = err.response.data.errors
+                    commit('SET_ERRORS', err.response.data.errors)
+                }
             })
-    },
+
+     },
     getLogout() {
         localStorage.removeItem('blog_token')
         window.location.replace('login');
@@ -52,6 +62,15 @@ const actions = {
             password: user.password
         })
         console.log(response);
+    },
+    async updateUser({commit}, user){
+        const response = await axios.put('http://localhost/fet/public/api/user/users/update', {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            password: user.password
+        })
+        console.log(response); 
     }
 }
 
@@ -63,6 +82,10 @@ const mutations = {
     },
     SetUsers(state, data) {
         state.listUsers = data
+    },
+    SET_ERRORS(state, data){
+        console.log(data)
+        state.errorMessage = data
     }
 }
 

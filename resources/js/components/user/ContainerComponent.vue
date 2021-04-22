@@ -39,6 +39,12 @@
                   class="text-center"
                   style="color: #26c6da; font-weight: bold; font-size: 18px"
                 >
+                  Fecha Actualización
+                </th>
+                <th
+                  class="text-center"
+                  style="color: #26c6da; font-weight: bold; font-size: 18px"
+                >
                   Acciones
                 </th>
               </tr>
@@ -48,8 +54,13 @@
                 <td>{{ item.name }}</td>
                 <td>{{ item.email }}</td>
                 <td>{{ item.created_at }}</td>
+                <td>{{ item.updated_at }}</td>
+
                 <td>
-                  <v-icon medium color="#F50057" @click="dialog = true"
+                  <v-icon
+                    medium
+                    color="#F50057"
+                    @click="openModal('update', item)"
                     >mdi-pencil</v-icon
                   >
                 </td>
@@ -71,7 +82,7 @@
         fab
         rounded
         small
-        @click="dialog = true"
+        @click="openModal('insert')"
       >
         <v-icon> mdi-plus</v-icon>
       </v-btn>
@@ -80,7 +91,9 @@
     <v-dialog v-model="dialog" persistent max-width="800px">
       <v-card>
         <v-card-title class="headline cyan accent-4">
-          <span class="headline white--text">Agregar Usuario</span>
+          <span class="text-md-center white--text justify-center"
+            >Formulario usuarios</span
+          >
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -99,16 +112,32 @@
                   required
                 ></v-text-field>
               </v-col>
-              <v-col cols="12">
+
+              <v-col cols="12" v-if="actionForm == 2">
+                <v-select
+                  item-text="name"
+                  item-value="id"
+                  :items="items"
+                  label="Cambiar Contraseña*"
+                  v-model="checkPassword"
+                ></v-select>
+              </v-col>
+              <v-col cols="12" v-if="checkPassword == 1">
                 <v-text-field
                   type="password"
-                  label="Contraseña*"
+                  label="Nueva Contraseña*"
                   v-model="user.password"
-                  required
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" v-if="actionForm == 1">
+                <v-text-field
+                  type="password"
+                  label="Nueva Contraseña*"
+                  v-model="user.password"
                 ></v-text-field>
               </v-col>
             </v-row>
-            <div class="">
+            <div>
               <div
                 style="
                   text-align: center;
@@ -119,15 +148,14 @@
                   font-weight: bold;
                 "
                 class="marquee"
+                v-for="(errors, index) in errorMessage"
+                :key="index"
+                v-text="errors"
               >
-                <tr v-for="res in errorMessage">
-                  <td>
-                    <MARQUEE v-for="item in res"> {{ item }}</MARQUEE>
-                  </td>
-                </tr>
+                {{ errorMessage }}
               </div>
             </div>
-            <pre>{{ user }}</pre>
+            <!-- <pre>{{ user }}</pre> -->
           </v-container>
         </v-card-text>
         <v-card-actions>
@@ -135,7 +163,22 @@
           <v-btn color="red darken-1" text @click="dialog = false">
             Cerrar
           </v-btn>
-          <v-btn color="blue darken-1" text @click="save"> Guardar </v-btn>
+          <v-btn
+            v-if="actionForm == 1"
+            color="blue darken-1"
+            text
+            @click="save"
+          >
+            Guardar
+          </v-btn>
+          <v-btn
+            v-if="actionForm == 2"
+            color="blue darken-1"
+            text
+            @click="update"
+          >
+            Modificar
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -151,12 +194,24 @@ export default {
   data() {
     return {
       dialog: false,
+      actionForm: 0,
+      actionMessage: {
+        agg: "Agregar usuario",
+        mod: "Actualizar usuario",
+      },
       user: {
+        id: 0,
         name: "",
         email: "",
         password: "",
       },
-      errorMessage: "",
+      errorUser: 0,
+      errorMessage: [],
+      items: [
+        { id: 1, name: "Si" },
+        { id: 2, name: "No" },
+      ],
+      checkPassword: 2,
     };
   },
   computed: {
@@ -164,7 +219,66 @@ export default {
   },
 
   methods: {
+    validate() {
+      this.errorUser = 0;
+      this.errorMessage = [];
+      if (this.actionForm == 1) {
+        if (!this.user.name) {
+          this.errorMessage.push("Digite el nombre del usuario");
+        }
+        if (!this.user.email) {
+          this.errorMessage.push("Digite el email del usuario");
+        }
+        if (!this.user.password) {
+          this.errorMessage.push("Digite la contraseña del usuario");
+        }
+        if (this.errorMessage.length) {
+          this.errorUser = 1;
+        }
+      } else {
+        if (!this.user.name) {
+          this.errorMessage.push("Digite el nombre del usuario");
+        }
+        if (!this.user.email) {
+          this.errorMessage.push("Digite el email del usuario");
+        }
+        if (this.checkPassword == 1) {
+          if (!this.user.password) {
+            this.errorMessage.push("Digite nueva contraseña");
+          }
+        }
+        if (this.errorMessage.length) {
+          this.errorUser = 1;
+        }
+      }
+
+      return this.errorUser;
+    },
+    openModal(action, data) {
+      this.dialog = true;
+      switch (action) {
+        case "insert":
+          this.actionForm = 1;
+          this.user.id = 0;
+          this.user.name = "";
+          this.user.email = "";
+          this.user.password = "";
+          break;
+        case "update":
+          this.actionForm = 2;
+          this.user.id = data.id;
+          this.user.name = data.name;
+          this.user.email = data.email;
+          this.user.password = data.password;
+          break;
+        default:
+          break;
+      }
+    },
     save() {
+      if (this.validate()) {
+        return;
+      }
       this.$store
         .dispatch("user/saveUser", this.user)
         .then(() => {
@@ -177,6 +291,15 @@ export default {
             this.errorMessage = err.response.data.errors;
           }
         });
+    },
+    update() {
+      if (this.validate()) {
+        return;
+      }
+      this.$store.dispatch("user/updateUser", this.user).then(() => {
+        this.$store.dispatch("user/getList");
+        this.dialog = false;
+      });
     },
   },
 
