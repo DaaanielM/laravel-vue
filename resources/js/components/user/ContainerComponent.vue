@@ -254,6 +254,11 @@ export default {
 
       return this.errorUser;
     },
+    cleanMessageError() {
+      this.errorUser = 0;
+      this.errorMessage = [];
+      this.checkPassword = 2;
+    },
     openModal(action, data) {
       this.dialog = true;
       switch (action) {
@@ -263,6 +268,7 @@ export default {
           this.user.name = "";
           this.user.email = "";
           this.user.password = "";
+          this.cleanMessageError();
           break;
         case "update":
           this.actionForm = 2;
@@ -270,6 +276,8 @@ export default {
           this.user.name = data.name;
           this.user.email = data.email;
           this.user.password = data.password;
+          this.cleanMessageError();
+
           break;
         default:
           break;
