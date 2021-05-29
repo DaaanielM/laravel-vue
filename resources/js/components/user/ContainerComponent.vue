@@ -6,44 +6,44 @@
           style="
             text-align: center;
             letter-spacing: 2px;
-            color: #26c6da;
+            color: #0277bd;
             text-transform: uppercase;
             padding: 20px;
           "
         >
-          registros usuarios
+          {{ title }}
         </h1>
-        <v-simple-table dark>
+        <v-simple-table>
           <template v-slot:default>
             <thead>
               <tr>
                 <th
                   class="text-center"
-                  style="color: #26c6da; font-weight: bold; font-size: 18px"
+                  style="color: #0277bd; font-weight: bold; font-size: 18px"
                 >
                   Nombre
                 </th>
                 <th
                   class="text-center"
-                  style="color: #26c6da; font-weight: bold; font-size: 18px"
+                  style="color: #0277bd; font-weight: bold; font-size: 18px"
                 >
                   Email
                 </th>
                 <th
                   class="text-center"
-                  style="color: #26c6da; font-weight: bold; font-size: 18px"
+                  style="color: #0277bd; font-weight: bold; font-size: 18px"
                 >
                   Fecha Creación
                 </th>
                 <th
                   class="text-center"
-                  style="color: #26c6da; font-weight: bold; font-size: 18px"
+                  style="color: #0277bd; font-weight: bold; font-size: 18px"
                 >
                   Fecha Actualización
                 </th>
                 <th
                   class="text-center"
-                  style="color: #26c6da; font-weight: bold; font-size: 18px"
+                  style="color: #0277bd; font-weight: bold; font-size: 18px"
                 >
                   Acciones
                 </th>
@@ -90,10 +90,10 @@
 
     <v-dialog v-model="dialog" persistent max-width="800px">
       <v-card>
-        <v-card-title class="headline cyan accent-4">
-          <span class="text-md-center white--text justify-center"
-            >Formulario usuarios</span
-          >
+        <v-card-title class="headline light-blue darken-3">
+          <span class="text-md-center white--text justify-center">{{
+            title
+          }}</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -165,7 +165,7 @@
           </v-btn>
           <v-btn
             v-if="actionForm == 1"
-            color="blue darken-1"
+            color="light-blue darken-3"
             text
             @click="save"
           >
@@ -173,7 +173,7 @@
           </v-btn>
           <v-btn
             v-if="actionForm == 2"
-            color="blue darken-1"
+            color="light-blue darken-3"
             text
             @click="update"
           >
@@ -195,6 +195,7 @@ export default {
     return {
       dialog: false,
       actionForm: 0,
+      title: "",
       actionMessage: {
         agg: "Agregar usuario",
         mod: "Actualizar usuario",
@@ -257,13 +258,13 @@ export default {
     cleanMessageError() {
       this.errorUser = 0;
       this.errorMessage = [];
-      this.checkPassword = 2;
     },
     openModal(action, data) {
       this.dialog = true;
       switch (action) {
         case "insert":
           this.actionForm = 1;
+          this.title = "Insertar Usuario";
           this.user.id = 0;
           this.user.name = "";
           this.user.email = "";
@@ -272,6 +273,7 @@ export default {
           break;
         case "update":
           this.actionForm = 2;
+          this.title = "Editar usuario " + data.name;
           this.user.id = data.id;
           this.user.name = data.name;
           this.user.email = data.email;

@@ -6,7 +6,7 @@
         <v-row align="center" justify="center">
           <v-col cols="12" sm="8" md="4">
             <v-card class="elevation-12">
-              <v-toolbar class="bg-title" color="#00ACC1" dark flat>
+              <v-toolbar class="bg-title" color="#0277BD" dark flat>
                 <v-toolbar-title class="title"
                   >Formulario de Acceso</v-toolbar-title
                 >
@@ -42,7 +42,7 @@
               </v-card-text>
 
               <v-card-actions class="btn">
-                <v-btn class="textBtn" color="#00ACC1" @click="login"
+                <v-btn class="textBtn" color="#0277BD" @click="login"
                   >Ingresar</v-btn
                 >
               </v-card-actions>

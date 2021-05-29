@@ -22,3 +22,11 @@ Route::prefix('/user')->group(function () {
     Route::middleware('auth:api')->post('/users/store', 'api\v1\UserController@store');
     Route::middleware('auth:api')->put('/users/update', 'api\v1\UserController@update');
 });
+
+Route::prefix('/product')->group(function () {
+    // Route::get('/products', 'api\v1\ProductController@index');
+    Route::middleware('auth:api')->get('/products', 'api\v1\ProductController@index');
+    Route::middleware('auth:api')->post('products/store', 'api\v1\ProductController@store');
+    Route::middleware('auth:api')->put('/products/update', 'api\v1\ProductController@update');
+});
+

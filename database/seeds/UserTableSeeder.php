@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Seeder;
 use App\User;
-
 class UserTableSeeder extends Seeder
 {
     /**
@@ -17,8 +16,10 @@ class UserTableSeeder extends Seeder
             'email' => 'daniel@gmail.com',
             'password' => \Hash::make('daniel123')
         ]);
+
         foreach ($users as $user) {
             User::updateOrCreate($user);
         }
+
     }
 }
